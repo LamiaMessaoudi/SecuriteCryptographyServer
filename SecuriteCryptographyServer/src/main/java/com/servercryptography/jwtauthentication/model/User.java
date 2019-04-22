@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -50,7 +51,8 @@ public class User{
     @NotBlank
     @Size(min=6, max = 100)
     private String password;
-
+    @Lob
+    private byte[] avatar;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", 
     	joinColumns = @JoinColumn(name = "user_id"), 
@@ -113,4 +115,13 @@ public class User{
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+	public byte[] getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(byte[] avatar) {
+		this.avatar = avatar;
+	}
+    
 }
