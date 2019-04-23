@@ -30,11 +30,16 @@ import org.bouncycastle.util.io.pem.PemObjectGenerator;
 import org.bouncycastle.util.io.pem.PemReader;
 import org.bouncycastle.util.io.pem.PemWriter;
 import org.bouncycastle.x509.X509V1CertificateGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.servercryptography.jwtauthentication.model.Document;
+import com.servercryptography.jwtauthentication.repository.DocumentRepository;
 
 @Service
 public class CertificatServiceImpl implements CertificatService {
-	
+	@Autowired
+	DocumentRepository documentRepository;
 	@Override
 	public PublicKey getPublickey(X509Certificate cert ) {
 		return cert.getPublicKey();
@@ -58,8 +63,8 @@ public class CertificatServiceImpl implements CertificatService {
 	}
 	    
 	  @Override  
-      public  X509Certificate createCertificat(java.security.KeyPair keyPair ,String filename) {
-		  
+      public  Document createCertificat(java.security.KeyPair keyPair ,String filename) {
+		  Document doc=null;
     	  Security.addProvider(new BouncyCastleProvider());
 
     	  Date validityBeginDate = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000);
@@ -88,8 +93,11 @@ public class CertificatServiceImpl implements CertificatService {
 			e.printStackTrace();
 		} 
 
+		
+		
           PemWriter pemWriter = null;
 		try {
+			doc=new Document("certificat",cert.getEncoded());
 			pemWriter = new PemWriter(new FileWriter("E:\\certificat\\"+filename+".pem"));
 		
 				pemWriter.writeObject(new PemObject("CERTIFICATE", cert.getEncoded()));
@@ -99,7 +107,8 @@ public class CertificatServiceImpl implements CertificatService {
 				e.printStackTrace();
 			}
 		
-		return cert;
+		    return documentRepository.save(doc);
+
     	  }  
       
 	  

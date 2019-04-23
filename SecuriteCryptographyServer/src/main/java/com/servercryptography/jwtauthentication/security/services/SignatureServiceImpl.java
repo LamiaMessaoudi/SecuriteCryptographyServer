@@ -7,13 +7,18 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.servercryptography.jwtauthentication.model.Document;
+import com.servercryptography.jwtauthentication.repository.DocumentRepository;
 
 
 @Service
 public class SignatureServiceImpl implements Signatureservice{
 	
-	
+	@Autowired
+	DocumentRepository documentRepository;
 	 @Override 
 	 public KeyPair genererCle() {
 		 KeyPair keyPair = null;
@@ -60,17 +65,11 @@ public class SignatureServiceImpl implements Signatureservice{
 	 }
 	  
 	 @Override
-	  public void enregistrerSignature(byte[] sign , String filename) {
-		  try {
-		    FileOutputStream fop = null;
-			File file;
-			file = new File("E:\\signature\\"+filename);
-			fop = new FileOutputStream(file);
-	        fop.write(sign);
-		    fop.close();
-		  }catch(Exception e) {
-			  
-		  } 
+	  public Document enregistrerSignature(byte[] sign ) {
+		 Document doc=new Document("signature",sign);
+		return  documentRepository.save(doc);
+		
+	
 	  }
 	  
 	  
@@ -88,6 +87,7 @@ public class SignatureServiceImpl implements Signatureservice{
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
+	     
 	    return getBytes;
 		  
 		  

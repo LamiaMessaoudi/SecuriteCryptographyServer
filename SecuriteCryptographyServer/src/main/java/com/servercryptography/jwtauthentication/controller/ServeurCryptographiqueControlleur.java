@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.security.KeyPair;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.servercryptography.jwtauthentication.model.Document;
 import com.servercryptography.jwtauthentication.security.services.CertificatService;
 import com.servercryptography.jwtauthentication.security.services.HashageService;
 import com.servercryptography.jwtauthentication.security.services.Signatureservice;
@@ -36,8 +38,9 @@ public class ServeurCryptographiqueControlleur {
 	CertificatService certificatService;
 	 @CrossOrigin
 	 @RequestMapping(value = "/signer", method = RequestMethod.POST , headers = {"content-type=multipart/mixed", "content-type=multipart/form-data"},consumes = {"multipart/form-data"})
-	    public void signer(@RequestParam("file") MultipartFile file ,@RequestPart(name="algosign")String algosign ,@RequestPart(name="algohash")String algohash) {
-   
+	    public ArrayList signer(@RequestParam("file") MultipartFile file ,@RequestPart(name="algosign")String algosign ,@RequestPart(name="algohash")String algohash) {
+			Document signdoc = null;
+			Document certificatdoc = null;
 		 try {
 			
 			 System.out.println(algosign);
@@ -45,9 +48,9 @@ public class ServeurCryptographiqueControlleur {
 			byte[] hash=hashageService.hasher(file.getBytes(),algohash);
 			hashageService.enregistrerHashage(hash, file.getName());
 			KeyPair keyPair=signatureservice.genererCle();
-			X509Certificate cert=certificatService.createCertificat(keyPair, file.getName());
+			certificatdoc=certificatService.createCertificat(keyPair, file.getName());
 			byte[] sign=signatureservice.signer(hash, keyPair ,algosign);
-			signatureservice.enregistrerSignature(sign, file.getName());
+		    signdoc=signatureservice.enregistrerSignature(sign);
 			
 			
 			
@@ -55,6 +58,10 @@ public class ServeurCryptographiqueControlleur {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		 ArrayList a=new ArrayList<>();
+		 a.add(signdoc);
+		 a.add(certificatdoc);
+		return a ;
 
 	    }
 	 

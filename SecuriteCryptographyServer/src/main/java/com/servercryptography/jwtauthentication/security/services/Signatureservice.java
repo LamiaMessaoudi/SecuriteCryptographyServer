@@ -6,6 +6,8 @@ import java.security.PublicKey;
 
 import org.springframework.stereotype.Service;
 
+import com.servercryptography.jwtauthentication.model.Document;
+
 @Service
 public interface Signatureservice {
 	
@@ -14,7 +16,7 @@ public interface Signatureservice {
 
 	public byte[] readSignature(File file);
 
-	public void enregistrerSignature(byte[] sign, String filename);
+	public Document enregistrerSignature(byte[] sign);
 
 	public byte[] signer(byte[] hash, KeyPair keyPair , String algosign);
 

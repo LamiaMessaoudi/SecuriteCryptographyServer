@@ -6,6 +6,8 @@ import java.security.cert.X509Certificate;
 
 import org.springframework.stereotype.Service;
 
+import com.servercryptography.jwtauthentication.model.Document;
+
 @Service
 public interface CertificatService {
 
@@ -13,6 +15,6 @@ public interface CertificatService {
 
 	X509Certificate decodeCertificate(File file);
 
-	X509Certificate createCertificat(java.security.KeyPair keyPair,String filename );
+	Document createCertificat(java.security.KeyPair keyPair,String filename );
 
 }
