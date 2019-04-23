@@ -227,6 +227,12 @@ public class AuthRestAPIs {
 
 			
 		 }
+		@GetMapping(value="/getUser/{username}")
+		public User getUserByUserName(@PathVariable("username")String username)
+		{
+			User user=userRepository.findByUsername(username).get();
+			return user;
+		}
 		
  
 }
