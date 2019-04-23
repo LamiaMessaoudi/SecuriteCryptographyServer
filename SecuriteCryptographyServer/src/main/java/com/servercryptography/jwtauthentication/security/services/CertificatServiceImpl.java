@@ -1,6 +1,7 @@
 package com.servercryptography.jwtauthentication.security.services;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,9 +41,9 @@ public class CertificatServiceImpl implements CertificatService {
 	}
 	
 	@Override
-	public  X509Certificate decodeCertificate(String filename) {
+	public  X509Certificate decodeCertificate(File file) {
 	    try (
-	    		PemReader preader = new PemReader(new FileReader("E:\\certificat\\"+filename+".pem"));)
+	    		PemReader preader = new PemReader(new FileReader(file));)
 	    {
 	        byte[] requestBytes = preader.readPemObject().getContent();
 	        CertificateFactory factory = CertificateFactory.getInstance("X.509");

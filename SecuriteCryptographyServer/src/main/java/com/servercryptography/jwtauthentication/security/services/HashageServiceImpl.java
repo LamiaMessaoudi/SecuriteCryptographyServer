@@ -16,10 +16,11 @@ import org.springframework.stereotype.Service;
 public class HashageServiceImpl implements HashageService {
 
 	@Override
-	public byte[] hashe256(byte[] file) {
+	public byte[] hasher(byte[] file , String algo) {
+		System.out.println(algo);
 		MessageDigest digest = null;
 		try {
-			digest = MessageDigest.getInstance("SHA-256");
+			digest = MessageDigest.getInstance(algo);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -31,19 +32,7 @@ public class HashageServiceImpl implements HashageService {
 
 	
 	
-	@Override
-	public byte[] md5(byte[] file) {
-		MessageDigest digest = null;
-		try {
-			digest = MessageDigest.getInstance("md5");
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		
-		return digest.digest(file);
-		
-	}
+	
 	
 	@Override
 	public void enregistrerHashage(byte[] hash , String filename) {

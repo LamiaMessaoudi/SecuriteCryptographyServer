@@ -30,10 +30,10 @@ public class SignatureServiceImpl implements Signatureservice{
 	 }
 	  
 	 @Override
-	  public byte[]  signer(byte[] hash ,KeyPair keyPair ) 
+	  public byte[]  signer(byte[] hash ,KeyPair keyPair , String algosign ) 
 	  {  byte[] signatureBytes = null;
 		  try {
-	           Signature signature = Signature.getInstance("SHA1withRSA");
+	           Signature signature = Signature.getInstance(algosign);
 	           signature.initSign(keyPair.getPrivate(), new SecureRandom());
 	           signature.update(hash);
 	           signatureBytes = signature.sign();
@@ -44,10 +44,10 @@ public class SignatureServiceImpl implements Signatureservice{
 	  }
 	 
 	 @Override
-	 public boolean verifysign(byte[] hash, byte[] sign , PublicKey pubkey) {
+	 public boolean verifysign(byte[] hash, byte[] sign , PublicKey pubkey , String algosign) {
 		 boolean ok = false ;
 		 try {
-		 Signature signature = Signature.getInstance("SHA1withRSA");
+		 Signature signature = Signature.getInstance(algosign);
 		 signature.initVerify(pubkey);
 		 signature.update(hash);
 		ok= signature.verify(sign);
@@ -75,11 +75,11 @@ public class SignatureServiceImpl implements Signatureservice{
 	  
 	  
 	 @Override
-	  public byte[] readSignature(String filename)
+	  public byte[] readSignature(File file)
 	  {   byte[] getBytes = null;
 	     try {
-	        File file;
-	         file = new File("E:\\signature\\"+filename);
+	        File files;
+	         files = file;
 	        getBytes = new byte[(int) file.length()];
 	        InputStream is = new FileInputStream(file);
 	        is.read(getBytes);
