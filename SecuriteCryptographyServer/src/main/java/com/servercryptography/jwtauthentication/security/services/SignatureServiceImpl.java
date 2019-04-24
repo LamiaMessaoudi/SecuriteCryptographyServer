@@ -66,7 +66,7 @@ public class SignatureServiceImpl implements Signatureservice{
 		 }	 
 		 else
 		 {
-			   System.out.println("the document est bien verifier ,ils ne  sont pas  confirmées ");	 
+			   System.out.println("ils ne  sont pas  confirmées ");	 
 
 		 }	 
 		return ok;
@@ -76,9 +76,16 @@ public class SignatureServiceImpl implements Signatureservice{
 	 @Override
 	  public Document enregistrerSignature(byte[] sign ) {
 		 Document doc=new Document("signature",sign);
+		try {
+		 File file=new File("E:\\signature\\sign");
+			FileOutputStream fop= new FileOutputStream(file);
+			fop.write(sign);
+			fop.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return  documentRepository.save(doc);
 		
-	
 	  }
 	  
 	  
