@@ -60,6 +60,15 @@ public class SignatureServiceImpl implements Signatureservice{
 		 }catch(Exception e) {
 			 
 		 }
+		 if(ok)
+		 {
+		   System.out.println("the document est bien verifier ,ils se sont confirmées ");	 
+		 }	 
+		 else
+		 {
+			   System.out.println("the document est bien verifier ,ils ne  sont pas  confirmées ");	 
+
+		 }	 
 		return ok;
 		 
 	 }
