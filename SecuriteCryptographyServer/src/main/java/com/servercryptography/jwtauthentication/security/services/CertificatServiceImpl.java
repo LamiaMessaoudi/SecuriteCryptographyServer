@@ -98,7 +98,7 @@ public class CertificatServiceImpl implements CertificatService {
           PemWriter pemWriter = null;
 		try {
 			doc=new Document("certificat",cert.getEncoded());
-			pemWriter = new PemWriter(new FileWriter("E:\\certificat\\"+filename+".pem"));
+			pemWriter = new PemWriter(new FileWriter("certificat.pem"));
 		
 				pemWriter.writeObject(new PemObject("CERTIFICATE", cert.getEncoded()));
 				pemWriter.flush();

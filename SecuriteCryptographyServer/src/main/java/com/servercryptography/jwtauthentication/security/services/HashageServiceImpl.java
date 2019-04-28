@@ -39,7 +39,7 @@ public class HashageServiceImpl implements HashageService {
 		  try {
 		    FileOutputStream fop = null;
 			File file;
-			file = new File("E:\\hashage\\"+filename);
+			file = new File("hashage");
 			fop = new FileOutputStream(file);
 	        fop.write(hash);
 		    fop.close();
@@ -54,7 +54,7 @@ public class HashageServiceImpl implements HashageService {
 		  byte[] getBytes = null;
 		     try {
 		        File file;
-		         file = new File("E:\\hashage\\"+filename);
+		         file = new File("hashage");
 		        getBytes = new byte[(int) file.length()];
 		        InputStream is = new FileInputStream(file);
 		        is.read(getBytes);

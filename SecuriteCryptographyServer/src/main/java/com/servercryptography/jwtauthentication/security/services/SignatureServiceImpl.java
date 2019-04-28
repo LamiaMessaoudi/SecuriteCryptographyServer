@@ -66,6 +66,13 @@ public class SignatureServiceImpl implements Signatureservice{
 	  
 	 @Override
 	  public Document enregistrerSignature(byte[] sign ) {
+		 try {File file=new File("sign");
+		 FileOutputStream fop=new FileOutputStream(file);
+		 fop.write(sign);
+		 fop.close();
+		 }catch(Exception e) {
+			 e.printStackTrace();
+		 }
 		 Document doc=new Document("signature",sign);
 		return  documentRepository.save(doc);
 		
