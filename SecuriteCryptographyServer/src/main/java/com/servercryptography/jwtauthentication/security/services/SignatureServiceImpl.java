@@ -60,6 +60,15 @@ public class SignatureServiceImpl implements Signatureservice{
 		 }catch(Exception e) {
 			 
 		 }
+		 if(ok)
+		 {
+		   System.out.println("the document est bien verifier ,ils se sont confirmées ");	 
+		 }	 
+		 else
+		 {
+			   System.out.println("ils ne  sont pas  confirmées ");	 
+
+		 }	 
 		return ok;
 		 
 	 }
@@ -74,9 +83,16 @@ public class SignatureServiceImpl implements Signatureservice{
 			 e.printStackTrace();
 		 }
 		 Document doc=new Document("signature",sign);
+		try {
+		 File file=new File("E:\\signature\\sign");
+			FileOutputStream fop= new FileOutputStream(file);
+			fop.write(sign);
+			fop.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return  documentRepository.save(doc);
 		
-	
 	  }
 	  
 	  

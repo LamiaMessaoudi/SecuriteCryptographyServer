@@ -113,4 +113,13 @@ public class RestApiAdmin {
 			
 		 }
 		
+		
+		@GetMapping(value="/getUser/{username}")
+		@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+		public User getUserByUserName(@PathVariable("username")String username)
+		{
+			User user=userRepository.findByUsername(username).get();
+			return user;
+		}
+		
 }
